@@ -1,19 +1,22 @@
-# THEATRE_Test
+# Theatre management final exercise
 
-Member 1 (Zakhar):
+[![C++ CI](https://github.com/PADOALEX/THEATRE_Final_Code/actions/workflows/ci.yml/badge.svg)](https://github.com/PADOALEX/THEATRE_Final_Code/actions/workflows/ci.yml)
 
-Commit 1: Add Performance Class Definition • Branch name: feature/add-performance-class
-Commit 4: Implement Main Functionality • Branch name: feature/implement-main-functionality
-Commit 7: Implement Performance File I/O Methods • Branch name: feature/implement-performance-file-io
+A historical variant of the C++ theatre console exercise. Each ticket consumes one seat. Loading rejects oversized actor counts before accessing the fixed actor array.
 
-Member 2 (Vladyslav):
+## Build and run
 
-Commit 2: Add Ticket Class Definition • Branch name: feature/add-ticket-class
-Commit 5: Implement Performance Input and Display Methods • Branch name: feature/implement-performance-input-display
-Commit 8: Implement Ticket Input and Display Methods • Branch name: feature/implement-ticket-input-display
+Install Visual Studio 2022 or later with the Desktop development with C++ workload, CMake 3.20+ and Python 3.12+ for regression tests. Run from the repository root on Windows:
 
-Member 3 (Oleksandr):
+```powershell
+cmake -S . -B build
+cmake --build build --config Release
+ctest --test-dir build -C Release --output-on-failure
+.\build\Release\app.exe
+```
 
-Commit 3: Add Utility Functions for Date and Time Validation • Branch name: feature/add-utility-functions
-Commit 6: Implement Performance Utility Methods • Branch name: feature/implement-performance-utility-methods
-Commit 9: Implement Ticket File I/O Methods • Branch name: feature/implement-ticket-file-io
+The original Visual Studio solution remains available. The CMake executable is named `app`; executable location depends on the selected generator. Automated tests use temporary directories for file-based scenarios and verify behavior with bounded subprocess timeouts.
+
+## Scope
+
+This is a single-user academic program, without a database, authentication or deployment. It uses Windows/MSVC secure CRT functions. Text-file storage is a trusted local exercise format; interrupted writes and multiple processes are not supported. The maintained .NET successor is [PADO TheatreBook](https://github.com/PADOALEX/PADO-TheatreBook).
