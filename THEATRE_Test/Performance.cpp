@@ -288,6 +288,11 @@ void Performance::loadFromFile(std::ifstream& file) {
     file >> duration;
     file >> intermissions;
     file >> actorCount;
+    if (!file || actorCount < 0 || actorCount > 10) {
+        title[0] = '\0';
+        file.setstate(ios::failbit);
+        return;
+    }
     file.ignore();
     for (int i = 0; i < actorCount; i++) {
         file.getline(actors[i].name, sizeof(actors[i].name));
@@ -302,6 +307,10 @@ void Performance::loadFromFile(std::ifstream& file) {
 
     string separator;
     getline(file, separator);
+    if (!file || separator != "---" || !validateDate(date) || !validateTime(time) || duration <= 0 || availableSeats < 0) {
+        title[0] = '\0';
+        file.setstate(ios::failbit);
+    }
 }
 
 Performance* Performance::getNext() const {

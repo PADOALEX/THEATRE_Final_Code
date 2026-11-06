@@ -2,6 +2,7 @@
 #include "Performance.h"
 #include "Ticket.h"
 #include "Utils.h"
+#include <limits>
 
 using namespace std;
 
@@ -12,6 +13,12 @@ int main() {
 
     loadPerformances(perfHead);
     loadTickets(ticketHead, perfHead);
+    for (Ticket* ticket = ticketHead; ticket; ticket = ticket->getNext()) {
+        if (ticket->getId() >= ticketCounter) {
+            ticketCounter = ticket->getId();
+            if (ticketCounter < numeric_limits<int>::max()) ++ticketCounter;
+        }
+    }
 
     int choice;
     do {
@@ -121,10 +128,12 @@ int main() {
             sellTicket(ticketHead, perfHead, ticketCounter);
             break;
 		case 8:
+            if (ticketHead) { cout << "Reload blocked while tickets reference performances.\n"; break; }
             reloadPerformancesFromFile(perfHead);
             break;
             // Add this case to the switch statement
         case 9:
+            if (ticketHead) { cout << "Clear blocked while tickets reference performances.\n"; break; }
             clearPerformanceHistory(perfHead);
             break;
         case 0:
